@@ -24,33 +24,22 @@ export default function App() {
     setResults(data);
   };
 
-  // const makeImages = ([{ data }]) => {
-  //   for (let data of data) {
-  //     if (shows.Search.Poster) {
-  //       const img = document.createElement("IMG");
-  //       img.src = Array.map[0][1];
-  //       document.body.append(img);
-  //     }
-  //   }
-  // };
-  // console.log("DONE!");
-
   return (
-    <div>
-      <div className="App-header">
-        <div className="input-text input-group-lg justify-content-center  ">
+    <div className="container">
+      <div className="row-2">
+        <div className="col-12 mt-5 bg-light">
           <input
+            className="form-control form-row ml-10 w-100  "
             onChange={onInputChange}
             value={searchText}
-            className="form-control form-control "
             type="text"
-            placeholder="Any special movie?"
+            placeholder="What movies/series are you looking for?"
           />
 
           <br></br>
 
           <button
-            className="btn-primary input-text text-center "
+            className="btn-info btn mx-auto w-100"
             type="submit"
             onClick={fetchMovies}
           >
@@ -59,8 +48,6 @@ export default function App() {
 
           <br></br>
           <br></br>
-          <br></br>
-
           <List data={results} />
         </div>
       </div>
@@ -68,18 +55,47 @@ export default function App() {
   );
 }
 
-function List({ data }) {
-  if (data.Response === "True") {
-    data.Search.map((item) => (
-      <div className="movie-info text-uppercase text-dark">
-        <img src={item.Poster} alt="" />
-        <h4>Title: {item.Title}</h4>
-        <p>Year: {item.Year}</p>
-        <p>Writer: {item.Writer}</p>
-        <p>{item.Response}</p>
+function ListItem({ item }) {
+  return (
+    <div className="container">
+      <div className="row d-flex">
+        <div className="col-12 col-md-4 ">
+          <div className="card-body1">
+            <img src={item.Poster} alt="" />
+            <h4> Title: {item.Title}</h4>
+            <p> Year: {item.Year}</p>
+            <p> Writer: {item.Writer}</p>
+          </div>
+        </div>
+        <div className="col-12 col-md-4">
+          <div className="card-body2">
+            <img src={item.Poster} alt="" />
+            <h4> Title: {item.Title}</h4>
+            <p> Year: {item.Year}</p>
+            <p> Writer: {item.Writer}</p>
+          </div>
+        </div>
+        <div className="col-12 col-md-4">
+          <div className="card-body3">
+            <img src={item.Poster} alt="" />
+            <h4> Title: {item.Title}</h4>
+            <p> Year: {item.Year}</p>
+            <p> Writer: {item.Writer}</p>
+          </div>
+        </div>
       </div>
-    ));
-  } else {
-    return <p> No Movie found </p>;
-  }
+    </div>
+  );
+}
+
+function List({ data }) {
+  if (!data.Search) return <p> No Movie found </p>;
+
+  return (
+    <div className="container">
+      {data.Search.map((item) => (
+        <ListItem key={item.imdbID} item={item} />
+      ))}
+    </div>
+  );
 }
